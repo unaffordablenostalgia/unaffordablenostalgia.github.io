@@ -1,0 +1,25 @@
+# ---- 대용량 원본 소스 (웹 배포에 불필요) ----
+# 웹에는 assets/img/ 의 최적화된 JPG만 사용합니다.
+background-horizontal.png
+background-vertical-color.png
+background-vertical-gray.png
+
+# 루트에 있던 소스 SVG/폰트 원본 (assets/ 로 복사되어 사용됨)
+/title-color.svg
+/title-gray.svg
+/logos.svg
+/lines.svg
+/text-names.svg
+/text-date.svg
+/text-place.svg
+/fonts/
+
+# OS / 편집기
+.DS_Store
+Thumbs.db
+*.swp
+
+# 소스 원본(웹 배포 불필요) — 최적화본만 assets/img/ 에 사용
+assets/img/src/
+bio and statement (July 15).md
+README.md

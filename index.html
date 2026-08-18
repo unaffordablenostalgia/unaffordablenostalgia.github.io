@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Unaffordable Nostalgia</title>
+  <meta name="description" content="Unaffordable Nostalgia — a three-artist exhibition on memory, loss and the cost of longing. 감당할 수 없는 향수." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Unaffordable Nostalgia" />
+  <meta property="og:description" content="세 명의 작가가 붙잡으려 한 사라지는 것들에 관한 전시. A three-artist exhibition on memory and the cost of longing." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/img/hero-desktop.jpg" />
+
+  <link rel="preload" href="assets/fonts/Director-Bold.woff2" as="font" type="font/woff2" crossorigin />
+
+  <!-- 중문(번체): Source Han Serif TC = Google Fonts 의 Noto Serif TC (오픈소스, 동일 폰트) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&display=swap" />
+
+  <!-- 한글: Sandoll Jebi2 (Adobe Fonts kit dbx2bsr / font-family: "sandoll-jebi2")
+       JS 임베드 방식 — CSS(.css) 링크는 localhost에서 412가 나므로 .js 로더 사용 -->
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+  <script>
+    (function(d) {
+      var config = { kitId: 'dbx2bsr', scriptTimeout: 3000, async: true },
+      h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+    })(document);
+  </script>
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body data-lang="ko">
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="siteHeader">
+    <a class="site-header__title" href="#top">Unaffordable&nbsp;Nostalgia</a>
+
+    <nav class="site-header__nav" aria-label="Sections">
+      <a href="#info">Info</a>
+      <a href="#statement">Statement</a>
+      <a href="#ubac-work">Artists</a>
+      <a href="#kang">Curators</a>
+      <a href="#map">Map</a>
+    </nav>
+
+    <!-- 언어 스위처 (모바일 위주, 데스크톱에서는 3칼럼 동시 노출) -->
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" data-set-lang="ko" class="is-active">한</button>
+      <button type="button" data-set-lang="en">EN</button>
+      <button type="button" data-set-lang="zh">中</button>
+    </div>
+  </header>
+
+  <!-- ============ STAGE : KV → INFO → STATEMENT ============
+       하나의 고정 sticky 무대. 배경(홀로그래픽)은 KV·INFO 동안 고정되어
+       남아있고, STATEMENT 로 넘어갈 때 배경이 페이드아웃되며 글이 나타난다.
+       모든 전환은 제자리 블러 크로스페이드(아래로 스크롤되는 느낌 없음). -->
+  <section class="story story--stage" id="top">
+    <div class="story__sticky">
+      <!-- 배경 레이어 (KV·INFO 동안만 보임) -->
+      <div class="stage__bg" id="stageBg" aria-hidden="true">
+        <div class="hero__bg"></div>
+        <div class="hero__scrim"></div>
+      </div>
+
+      <!-- scene: KEY VISUAL -->
+      <div class="opening__layer opening__layer--kv is-active" data-scene="kv">
+        <h1 class="hero__title">
+          <img class="hero__titleimg" src="assets/svg/title-color.svg"
+               alt="Unaffordable Nostalgia 幾堪回首" />
+        </h1>
+        <div class="hero__inner">
+          <div class="hero__meta hero__meta--cols" id="heroMeta"></div>
+        </div>
+      </div>
+
+      <!-- scene: INFO (filled by JS) -->
+      <div class="opening__layer opening__layer--info" data-scene="info" id="info-layer"></div>
+
+      <!-- scene: STATEMENT (filled by JS) -->
+      <div class="opening__layer opening__layer--statement" data-scene="statement" id="statement-layer"></div>
+    </div>
+
+    <!-- scroll drivers (filled by JS: 2 + N statement paragraphs) -->
+    <div class="story__steps" id="stage-steps"></div>
+  </section>
+
+  <!-- FOOTER 는 스테이지 마지막 장면으로 JS 가 렌더 (buildFooterScene) -->
+
+  <!-- scroll progress rail (reference-style) -->
+  <div class="progress-rail" aria-hidden="true"><span class="progress-rail__fill"></span></div>
+
+  <script src="assets/js/content.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
