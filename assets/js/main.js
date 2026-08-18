@@ -376,16 +376,17 @@
 
     function col(label, items) {
       const c = el("div", "footer2__col");
-      c.appendChild(el("span", "footer2__label", label));
+      if (label) c.appendChild(el("span", "footer2__label", label));
       items.forEach((t) => c.appendChild(el("span", "footer2__item", t)));
       return c;
     }
+    const m = (typeof SITE !== "undefined" && SITE.meta) || {};
     const cols = el("div", "footer2__cols");
     cols.appendChild(col("Artists:", ["Ubac Studio (KR)", "Jang Gayoun (KR)", "Foreseen Agency (HK)"]));
     cols.appendChild(col("Curators:", ["Kang Min-hyung (KR)", "Wong Ka Ying KY (HK)"]));
-    cols.appendChild(col("Venue:", [
-      "Korean Cultural Center", "in Hong Kong",
-      "6–7/F Block B, PMQ,", "35 Aberdeen Street,", "Central, Hong Kong"
+    // 3번 칼럼 = KV 첫페이지 전시정보(날짜/장소/시간, 영문)
+    cols.appendChild(col("", [
+      (m.date && m.date.en) || "", (m.place && m.place.en) || "", (m.hours && m.hours.en) || ""
     ]));
     layer.appendChild(cols);
 
@@ -394,7 +395,7 @@
     const logos = el("img", "footer2__logos");
     logos.src = "assets/svg/logos.svg"; logos.alt = "Organisers and supporters"; logos.loading = "lazy";
     bottom.appendChild(logos);
-    bottom.appendChild(el("p", "footer2__copy", "© 2025 Unaffordable Nostalgia. All rights reserved."));
+    bottom.appendChild(el("p", "footer2__copy", "© 2026 Unaffordable Nostalgia. All rights reserved."));
     layer.appendChild(bottom);
 
     sticky.appendChild(layer);
