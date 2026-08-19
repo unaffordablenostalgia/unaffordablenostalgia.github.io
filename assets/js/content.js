@@ -110,6 +110,11 @@ const SITE = {
       instagram: "https://www.instagram.com/ubac_studio",
       work: {
         title: { ko: "맵 탈출 투어", en: "Escape Maps", zh: "逃逸地圖" },
+        images: [
+          { shape: "full", src: "assets/img/work/ubac-1.jpg" },
+          { shape: "full", src: "assets/img/work/ubac-2.jpg" },
+          { shape: "full", src: "assets/img/work/ubac-3.jpg" }
+        ],
         medium: {
           ko: "데이터 시각화, 설치, 인터랙티브, 커스텀 앱, 가변 크기, 2022",
           en: "Data Visualization, Installation, Interactive, Custom App, Dimensions Variable, 2022",
@@ -154,6 +159,11 @@ const SITE = {
       instagram: "https://www.instagram.com/flammable_j",
       work: {
         title: { ko: "경성시대, 어디에도 없는", en: "Placeless in the Gyeongseong Era", zh: "流離失所的京城時代" },
+        images: [
+          { shape: "sq", src: "assets/img/work/jang-1.jpg" },
+          { shape: "v",  src: "assets/img/work/jang-2.jpg" },
+          { shape: "sq", src: "assets/img/work/jang-3.jpg" }
+        ],
         medium: {
           ko: "혼합재료, 가변 크기, 2026",
           en: "Mixed materials, Dimensions Variable, 2026",
@@ -201,6 +211,11 @@ const SITE = {
       instagram: "https://www.instagram.com/foreseen_agency",
       work: {
         title: { ko: "이끼의 연결", en: "Connected Mosses", zh: "相連的苔蘚" },
+        images: [
+          { shape: "v",  src: "assets/img/work/foreseen-2.jpg" },
+          { shape: "sq", src: "assets/img/work/foreseen-1.jpg" },
+          { shape: "sq", src: "assets/img/work/foreseen-3.jpg" }
+        ],
         medium: {
           ko: "철제 계단, 내장 스크린, 커스텀 소프트웨어, 가변 크기, 2026",
           en: "Steel Staircase, Embedded Screens, Custom Software, Dimensions Variable, 2026",

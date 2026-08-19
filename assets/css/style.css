@@ -1047,7 +1047,16 @@ body[data-lang="zh"] .col[data-lang="zh"] { display: block; }
   .work__slide--v  .work__cap,
   .work__slide--sq .work__cap,
   .work__slide--h  .work__cap { grid-column: 1 / 2; grid-row: 2; align-self: end; margin-top: 18px; }
+  /* full 형태: 모바일에서도 캡션(1행) → 이미지(2행) 유지 */
+  .work__slide--full .work__cap { grid-row: 1; align-self: start; margin: 0 0 14px; }
+  .work__slide--full .work__box { grid-row: 2; }
 }
+
+/* "full" 형태(ubac): 캡션(이름+제목)=1칼럼 상단, 이미지=1-3칼럼 전체폭 아래 (파노라마 전체폭 배치)
+   모바일 블록 뒤에 둬 소스 순서로 grid-template-rows 를 확실히 덮어씀 */
+.work__slide--full { grid-template-rows: auto 1fr; }
+.work__slide--full .work__cap { grid-column: 1 / 2; grid-row: 1; align-self: start; margin: 0 0 clamp(12px, 2vh, 20px); }
+.work__slide--full .work__box { grid-column: 1 / -1; grid-row: 2; }
 
 /* =============================================================
    TEXT STACKING — 직전 텍스트가 50% 블러 흔적으로 남는 연출
