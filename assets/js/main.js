@@ -118,8 +118,17 @@
       psteps.push(pstep);
     }
     panel.appendChild(body);
+    // byline: 본문 3칼럼 하단에 각 언어를 해당 칼럼(1 한글 / 2 영어 / 3 중문)에 배치
     const foot = el("div", "panel__foot panel__foot--by");
-    foot.appendChild(i18n(el("span", "statement__by"), s.by));
+    const byCols = el("div", "cols");
+    LANGS.forEach((lang) => {
+      const c = el("div", "col");
+      c.dataset.lang = lang;
+      c.setAttribute("lang", lang);
+      c.appendChild(el("span", "statement__by", s.by[lang] || s.by.en || ""));
+      byCols.appendChild(c);
+    });
+    foot.appendChild(byCols);
     panel.appendChild(foot);
     layer.appendChild(panel);
     return {
@@ -210,38 +219,50 @@
   //  · 텍스트 비트: 본문이 상단→중단→하단으로 쌓임. 다음 이미지가 오면 다시 이미지만.
   function buildWorkScene(sticky, opts) {
     const paras = (opts.paragraphs.ko || opts.paragraphs.en || []);
-    const N = paras.length;
 
-    // 데모 배열: 세로 이미지 → 본문 전체(상→중→하 누적) → 정방형 → 가로 이미지
-    // (그룹별로 이미지 1장씩 앞세우는 구조. 지금은 본문을 첫 그룹에 몰아 누적을 보여줌)
-    const groupSizes = [N, 0, 0];
-    const shapes = ["v", "sq", "h"]; // 비율만 다른 더미(세로/정방/가로) — 모두 1~2칼럼
+    // 작업 이미지: 실제 이미지가 제공될 때만 이미지 페이지 생성.
+    //   더미 이미지는 제거됨 — 실제(고해상도) 이미지를 받으면 opts.images 로 주입만 하면
+    //   이미지 페이지 + 캡션(스튜디오 원문 + 작업 제목 3언어)이 자동 복원된다.
+    //   opts.images = [{ shape:'v'|'sq'|'h', src:'assets/img/...' }, ...] (이미지 앞, 텍스트 뒤)
+    const workImages = opts.images || [];
+
     const beats = [];
     const paraGroupStart = {};
-    let p = 0;
-    groupSizes.forEach((size, g) => {
-      const gStart = p;
-      beats.push({ type: "image", imgIndex: g });
-      for (let k = 0; k < size; k++) { beats.push({ type: "text", para: p, gStart }); paraGroupStart[p] = gStart; p++; }
-    });
+    workImages.forEach((_, g) => beats.push({ type: "image", imgIndex: g }));
+    paras.forEach((_, i) => { beats.push({ type: "text", para: i, gStart: 0 }); paraGroupStart[i] = 0; });
 
     const layer = el("div", "opening__layer scene--work");
 
-    // 이미지 레이어 — 이미지(빗금 회색칸, 글씨 없음)는 1~2칼럼, 3칼럼엔 설명(더미)
+    // 이미지 레이어 (실제 이미지가 있을 때만) — 1~2칼럼 이미지 + 옆칼럼 캡션
     const media = el("div", "work__media");
     const slides = [];
-    shapes.forEach((shape) => {
+    workImages.forEach((imgData) => {
+      const shape = imgData.shape || "v";
       const slide = el("div", "work__slide work__slide--" + shape);
-      slide.appendChild(el("div", "work__box"));            // 빗금 회색칸만
-      // 이미지 바로 옆 칼럼에 작가명 + 작업 제목 (두 줄)
+      const box = el("div", "work__box work__box--filled");
+      const img = el("img", "work__img");
+      img.src = imgData.src; img.alt = opts.eyebrow || ""; img.loading = "lazy";
+      box.appendChild(img);
+      slide.appendChild(box);
+      // 이미지 바로 옆 칼럼: 스튜디오명(원문) + 작업 제목 3언어(데스크톱은 전부, 모바일은 활성 언어만)
       const cap = el("div", "work__cap");
       if (opts.eyebrow) cap.appendChild(el("span", "work__cap-name", opts.eyebrow));
-      if (opts.title)   cap.appendChild(i18n(el("span", "work__cap-title"), opts.title));
+      if (opts.title) {
+        LANGS.forEach((lang) => {
+          const t = opts.title[lang];
+          if (!t) return;
+          const span = el("span", "work__cap-title", null);
+          span.dataset.lang = lang;
+          span.setAttribute("lang", lang);
+          span.textContent = t;
+          cap.appendChild(span);
+        });
+      }
       slide.appendChild(cap);
       media.appendChild(slide);
       slides.push(slide);
     });
-    layer.appendChild(media);
+    if (workImages.length) layer.appendChild(media);
 
     // 텍스트 레이어 (Statement식 전체화면 3칼럼)
     const text = el("div", "work__text");
@@ -291,7 +312,7 @@
   function buildBioScene(sticky, opts) {
     const paras = (opts.paragraphs.ko || opts.paragraphs.en || []);
     const nParas = paras.length;
-    const layer = el("div", "opening__layer scene--biocombo");
+    const layer = el("div", "opening__layer scene--biocombo" + (opts.variant === "curator" ? " scene--biocombo--curator" : ""));
 
     // 상단: 1칼럼=초상 / 2칼럼=이름 + (부제) + 인스타그램
     const top = el("div", "biocombo__top");
@@ -436,7 +457,8 @@
       scenes.push(buildWorkScene(sticky, {
         id: a.id + "-work", eyebrow: a.name,
         kicker: { ko: "작업 소개", en: "The Work", zh: "作品介紹" },
-        title: a.work.title, paragraphs: a.work.body
+        title: a.work.title, paragraphs: a.work.body,
+        images: a.work.images   // 실제 이미지 배열([{shape,src}]) 넣으면 이미지 페이지 자동 생성. 없으면 텍스트만.
       }));
       scenes.push(buildBioScene(sticky, {
         id: a.id + "-bio", eyebrow: a.name,
@@ -456,7 +478,8 @@
         title: { ko: c.nameSub, en: c.nameSub, zh: c.nameSub },
         paragraphs: c.body,
         portrait: c.portrait, colClass: curatorCols[ci] || "col1",
-        link: c.instagram, linkLabel: "Instagram ↗"
+        link: c.instagram, linkLabel: "Instagram ↗",
+        variant: "curator"   // 초상=3칼럼 / 이름·정보=1칼럼 (작가와 칼럼으로 구분)
       }));
     });
 

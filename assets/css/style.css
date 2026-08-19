@@ -776,10 +776,10 @@ body[data-lang="zh"] .col[data-lang="zh"] { display: block; }
 /* lines.svg — 고정, 배경과 텍스트 사이 레이어의 라인 텍스처 (info부터 노출) */
 .stage__lines {
   position: absolute;
-  left: 50%; top: 50%;
-  transform: translate(-50%, -50%);
-  height: 190svh; width: auto;      /* 화면 전체를 덮고 가장자리는 짤림 */
-  min-width: 105%;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 100%; height: auto;         /* 가로 100% 꽉 채우고 세로는 넘치면 상·하단 짤림 */
+  max-width: none;
   z-index: 1;                        /* 배경(#stageBg) 위, 텍스트 아래 */
   pointer-events: none;
   opacity: .55;
@@ -823,7 +823,8 @@ body[data-lang="zh"] .col[data-lang="zh"] { display: block; }
   line-height: 1.1; letter-spacing: -0.01em;
   color: var(--ink);
 }
-.panel__foot--by { justify-content: flex-start; }
+.panel__foot--by { display: block; }
+.panel__foot--by .cols { width: 100%; }
 .statement__by {
   font-family: var(--font-uni); font-weight: 700;
   font-size: 12px; letter-spacing: .06em; color: var(--ink-soft);
@@ -860,6 +861,9 @@ body[data-lang="zh"] .col[data-lang="zh"] { display: block; }
     repeating-linear-gradient(45deg, rgba(18,18,13,.05) 0 2px, transparent 2px 12px),
     linear-gradient(160deg, #c4c1cb 0%, #b7b4c0 100%);
 }
+/* 실제 이미지가 들어오면: 빗금 배경 없이 이미지가 박스를 채움 */
+.work__box--filled { border: none; background: none; overflow: hidden; }
+.work__img { width: 100%; height: 100%; object-fit: contain; object-position: top left; display: block; }
 /* 폭만 다름(세로=1칼럼 / 정방·가로=1-2칼럼), 높이는 전체 */
 .work__slide--v  .work__box { grid-column: 1 / 2; }  /* 1칼럼 */
 .work__slide--sq .work__box { grid-column: 1 / 3; }  /* 1-2칼럼 */
@@ -879,7 +883,7 @@ body[data-lang="zh"] .col[data-lang="zh"] { display: block; }
 .work__slide--col1-2 .work__portrait { grid-column: 1 / 3; }  /* 2칼럼 폭 */
 
 /* 이미지 바로 옆 칼럼 = 작가명 + 작업 제목 (이미지 1칼럼→2칼럼 / 1-2칼럼→3칼럼) */
-.work__cap { grid-column: 3 / 4; align-self: start; display: flex; flex-direction: column; }
+.work__cap { grid-column: 3 / 4; align-self: start; display: flex; flex-direction: column; font-family: var(--font-uni); }
 .work__slide--v  .work__cap { grid-column: 2 / 3; }   /* 세로 이미지(1칼럼) → 2칼럼 */
 .work__slide--sq .work__cap,
 .work__slide--h  .work__cap { grid-column: 3 / 4; }   /* 1-2칼럼 이미지 → 3칼럼 */
@@ -889,8 +893,16 @@ body[data-lang="zh"] .col[data-lang="zh"] { display: block; }
   color: var(--ink); margin-bottom: 6px;
 }
 .work__cap-title {
+  display: block;
   font-weight: 700; font-size: clamp(14px, 1.4vw, 18px);
   line-height: 1.25; color: var(--ink-soft);
+}
+/* 데스크톱: 3언어 제목 모두 표시. 모바일(<1200px): 활성 언어 제목만 */
+@media (max-width: 1199px) {
+  .work__cap-title[data-lang] { display: none; }
+  body[data-lang="ko"] .work__cap-title[data-lang="ko"],
+  body[data-lang="en"] .work__cap-title[data-lang="en"],
+  body[data-lang="zh"] .work__cap-title[data-lang="zh"] { display: block; }
 }
 
 /* 텍스트 레이어 (Statement식 전체화면 3칼럼) */
@@ -1010,10 +1022,18 @@ body[data-lang="zh"] .col[data-lang="zh"] { display: block; }
 .biocombo__body .pstep .cols { width: 100%; }
 .story--stage .biocombo__body .pstep .col p { font-size: 16px; }
 
+/* 큐레이터: 작가와 칼럼으로 구분 — 초상=3칼럼, 이름·정보=1칼럼 (데스크톱만)
+   grid-row:1 명시 필수: 초상(col3)이 DOM상 먼저라 sparse 자동배치가 meta(col1)를 2행으로
+   밀어내 body와 겹치던 버그 방지 → 둘 다 1행에 고정 */
+@media (min-width: 1000px) {
+  .scene--biocombo--curator .biocombo__portrait { grid-column: 3 / 4; grid-row: 1; }
+  .scene--biocombo--curator .biocombo__meta { grid-column: 1 / 2; grid-row: 1; }
+}
+
 @media (max-width: 999px) {
   .biocombo__top { grid-template-columns: 1fr; height: auto; }
   .biocombo__portrait { grid-column: 1 / 2; max-height: 44svh; }
-  .biocombo__link { grid-column: 1 / 2; margin-top: 10px; }
+  .biocombo__meta { grid-column: 1 / 2; }   /* 모바일: 이름·정보도 1칼럼(팬텀 칼럼 방지, 작가·큐레이터 공통) */
 }
 
 /* 모바일·태블릿: 칼럼 붕괴 → 이미지 전체폭·전체높이, 설명은 그 아래
@@ -1075,6 +1095,10 @@ body[data-lang="zh"] .col[data-lang="zh"] { display: block; }
   width: clamp(300px, 58vw, 820px);    /* 원본 크기 */
   height: auto;                        /* 비율 유지 */
   margin: 0;
+}
+/* 모바일: 메인 키비주얼 타이틀 SVG 30% 확대 (뷰포트를 넘지 않게 상한 캡 → 아주 좁은 폰은 화면폭에 맞춤) */
+@media (max-width: 671px) {
+  .hero__titleimg { width: min(390px, 94vw); }
 }
 
 /* =============================================================

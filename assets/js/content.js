@@ -34,34 +34,26 @@ const SITE = {
     kicker: { ko: "인포메이션", en: "Information", zh: "資訊" },
     columns: [
       {
-        head: { ko: "일정", en: "Schedule", zh: "日程" },
+        head: { ko: "일정 · 장소", en: "Schedule & Venue", zh: "日程 · 地點" },
         rows: [
           { label: { ko: "기간", en: "Dates", zh: "日期" },
-            value: "20 Aug – 7 Nov 2026" },
-          { label: { ko: "관람 시간", en: "Hours", zh: "開放時間" },
-            value: "Tue–Sat, 10:00–18:00\nClosed Mon, Sun & public holidays" },
-          { label: { ko: "개막", en: "Opening", zh: "開幕" },
-            value: "20 Aug 2026\nReception 18:00–20:00 · Ceremony 18:30" }
-        ]
-      },
-      {
-        head: { ko: "장소", en: "Venue", zh: "地點" },
-        rows: [
+            value: "20 Aug – 7 Nov 2026\nTue–Sat, 10:00–18:00\nClosed Mon, Sun & public holidays" },
           { label: { ko: "장소", en: "Venue", zh: "場地" },
-            value: "Korean Cultural Center in Hong Kong\n6–7/F Block B, PMQ,\n35 Aberdeen Street, Central, Hong Kong" },
-          { label: { ko: "주최", en: "Organised by", zh: "主辦" },
-            value: "Korean Cultural Centre in Hong Kong" },
-          { label: { ko: "후원", en: "Supported by", zh: "贊助" },
-            value: "Hong Kong Arts Development Council" }
+            value: "Korean Cultural Center in Hong Kong\n6–7/F Block B, PMQ,\n35 Aberdeen Street, Central, Hong Kong" }
         ]
       },
       {
-        head: { ko: "참여 · 프로그램", en: "People & Program", zh: "參與 · 節目" },
+        head: { ko: "참여", en: "People", zh: "參與" },
         rows: [
           { label: { ko: "작가", en: "Artists", zh: "藝術家" },
             value: "Ubac Studio (KR)\nJang Gayoun (KR)\nforeseen agency (HK)" },
           { label: { ko: "큐레이터", en: "Curators", zh: "策展人" },
-            value: "Kang Min-hyung (KR)\nWong Ka Ying (HK)" },
+            value: "Kang Min-hyung (KR)\nWong Ka Ying (HK)" }
+        ]
+      },
+      {
+        head: { ko: "프로그램", en: "Program", zh: "節目" },
+        rows: [
           { label: { ko: "공공 프로그램", en: "Public Program", zh: "公共節目" },
             value: "Artists Talk · 20 Aug 17:00–18:00\nCurator’s Tour · 20 Aug 18:45–19:30" }
         ]
@@ -117,7 +109,7 @@ const SITE = {
       portrait: "assets/img/portrait-ubac.jpg",
       instagram: "https://www.instagram.com/ubac_studio",
       work: {
-        title: { ko: "맵 탈출 투어: Escape Maps", en: "Escape Maps", zh: "逃逸地圖" },
+        title: { ko: "맵 탈출 투어", en: "Escape Maps", zh: "逃逸地圖" },
         medium: {
           ko: "데이터 시각화, 설치, 인터랙티브, 커스텀 앱, 가변 크기, 2022",
           en: "Data Visualization, Installation, Interactive, Custom App, Dimensions Variable, 2022",
