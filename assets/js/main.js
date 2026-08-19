@@ -418,7 +418,7 @@
     ]));
 
     // 3칼럼: 크레딧(같은 폰트·사이즈)
-    cols.appendChild(col("", ["Designed by Studio Hik", "Installed by Tiger Wong and Mars Lai"]));
+    cols.appendChild(col("", ["Designed by Studio Hik", "Installed by Tiger Wong, Mars Lai, Yiu Cheng, and Ho Sik Yin"]));
 
     layer.appendChild(cols);
 
