@@ -403,12 +403,23 @@
     }
     const m = (typeof SITE !== "undefined" && SITE.meta) || {};
     const cols = el("div", "footer2__cols");
-    cols.appendChild(col("Artists:", ["Ubac Studio (KR)", "Jang Gayoun (KR)", "Foreseen Agency (HK)"]));
-    cols.appendChild(col("Curators:", ["Kang Min-hyung (KR)", "Wong Ka Ying KY (HK)"]));
-    // 3번 칼럼 = KV 첫페이지 전시정보(날짜/장소/시간, 영문)
+
+    // 1칼럼: 작가 + 큐레이터
+    const c1 = el("div", "footer2__col");
+    c1.appendChild(el("span", "footer2__label", "Artists:"));
+    ["Ubac Studio (KR)", "Jang Gayoun (KR)", "Foreseen Agency (HK)"].forEach((t) => c1.appendChild(el("span", "footer2__item", t)));
+    c1.appendChild(el("span", "footer2__label footer2__label--gap", "Curators:"));
+    ["Kang Min-hyung (KR)", "Wong Ka Ying KY (HK)"].forEach((t) => c1.appendChild(el("span", "footer2__item", t)));
+    cols.appendChild(c1);
+
+    // 2칼럼: 전시정보(날짜/장소/시간, 영문)
     cols.appendChild(col("", [
       (m.date && m.date.en) || "", (m.place && m.place.en) || "", (m.hours && m.hours.en) || ""
     ]));
+
+    // 3칼럼: 크레딧(같은 폰트·사이즈)
+    cols.appendChild(col("", ["Designed by Studio Hik", "Installed by Tiger Wong and Mars Lai"]));
+
     layer.appendChild(cols);
 
     const bottom = el("div", "footer2__bottom");
