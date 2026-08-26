@@ -223,20 +223,24 @@
     // 작업 이미지: 실제 이미지가 제공될 때만 이미지 페이지 생성.
     //   더미 이미지는 제거됨 — 실제(고해상도) 이미지를 받으면 opts.images 로 주입만 하면
     //   이미지 페이지 + 캡션(스튜디오 원문 + 작업 제목 3언어)이 자동 복원된다.
-    //   opts.images = [{ shape:'v'|'sq'|'h', src:'assets/img/...' }, ...] (이미지 앞, 텍스트 뒤)
+    //   opts.images      = [{ shape:'v'|'sq'|'full', src }, ...] 본문 앞 이미지
+    //   opts.imagesAfter = [...] 본문 뒤(작가 소개 앞) 이미지  — 스크롤당 1장
     const workImages = opts.images || [];
+    const workImagesAfter = opts.imagesAfter || [];
+    const allImages = workImages.concat(workImagesAfter);
 
     const beats = [];
     const paraGroupStart = {};
     workImages.forEach((_, g) => beats.push({ type: "image", imgIndex: g }));
     paras.forEach((_, i) => { beats.push({ type: "text", para: i, gStart: 0 }); paraGroupStart[i] = 0; });
+    workImagesAfter.forEach((_, g) => beats.push({ type: "image", imgIndex: workImages.length + g }));
 
     const layer = el("div", "opening__layer scene--work");
 
-    // 이미지 레이어 (실제 이미지가 있을 때만) — 1~2칼럼 이미지 + 옆칼럼 캡션
+    // 이미지 레이어 (본문 앞 + 본문 뒤 이미지를 모두 슬라이드로) — 1~2칼럼 이미지 + 옆칼럼 캡션
     const media = el("div", "work__media");
     const slides = [];
-    workImages.forEach((imgData) => {
+    allImages.forEach((imgData) => {
       const shape = imgData.shape || "v";
       const slide = el("div", "work__slide work__slide--" + shape);
       const box = el("div", "work__box work__box--filled");
@@ -262,7 +266,7 @@
       media.appendChild(slide);
       slides.push(slide);
     });
-    if (workImages.length) layer.appendChild(media);
+    if (allImages.length) layer.appendChild(media);
 
     // 텍스트 레이어 (Statement식 전체화면 3칼럼)
     const text = el("div", "work__text");
@@ -469,7 +473,8 @@
         id: a.id + "-work", eyebrow: a.name,
         kicker: { ko: "작업 소개", en: "The Work", zh: "作品介紹" },
         title: a.work.title, paragraphs: a.work.body,
-        images: a.work.images   // 실제 이미지 배열([{shape,src}]) 넣으면 이미지 페이지 자동 생성. 없으면 텍스트만.
+        images: a.work.images,          // 본문 앞 이미지([{shape,src}])
+        imagesAfter: a.work.imagesAfter // 본문 뒤(작가 소개 앞) 이미지
       }));
       scenes.push(buildBioScene(sticky, {
         id: a.id + "-bio", eyebrow: a.name,

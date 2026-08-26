@@ -111,9 +111,14 @@ const SITE = {
       work: {
         title: { ko: "맵 탈출 투어", en: "Escape Maps", zh: "逃逸地圖" },
         images: [
-          { shape: "full", src: "assets/img/work/ubac-1.jpg" },
-          { shape: "full", src: "assets/img/work/ubac-2.jpg" },
-          { shape: "full", src: "assets/img/work/ubac-3.jpg" }
+          { shape: "sq", src: "assets/img/work/ubac-1.jpg" },  // NZ8_0821 (1-2칼럼)
+          { shape: "sq", src: "assets/img/work/ubac-2.jpg" },  // NZ8_0823 (1-2칼럼)
+          { shape: "sq", src: "assets/img/work/ubac-3.jpg" },  // NZ8_0828 (1-2칼럼)
+          { shape: "sq", src: "assets/img/work/ubac-4.jpg" }   // NZ8_0839 (1-2칼럼)
+        ],
+        imagesAfter: [
+          { shape: "sq",   src: "assets/img/work/ubac-5.jpg" },  // ubac-1 (1-2칼럼) 본문 뒤
+          { shape: "sq",   src: "assets/img/work/ubac-6.jpg" }   // ubac-2 (1-2칼럼) 본문 뒤
         ],
         medium: {
           ko: "데이터 시각화, 설치, 인터랙티브, 커스텀 앱, 가변 크기, 2022",
@@ -160,9 +165,14 @@ const SITE = {
       work: {
         title: { ko: "경성시대, 어디에도 없는", en: "Placeless in the Gyeongseong Era", zh: "流離失所的京城時代" },
         images: [
-          { shape: "sq", src: "assets/img/work/jang-1.jpg" },
-          { shape: "v",  src: "assets/img/work/jang-2.jpg" },
-          { shape: "sq", src: "assets/img/work/jang-3.jpg" }
+          { shape: "col23", src: "assets/img/work/jang-1.jpg" },  // NZ8_0752 (이미지 2-3칼럼, 타이틀 1칼럼)
+          { shape: "col23", src: "assets/img/work/jang-2.jpg" },  // NZ8_0755
+          { shape: "col23", src: "assets/img/work/jang-3.jpg" },  // NZ8_0749
+          { shape: "col23", src: "assets/img/work/jang-4.jpg" }   // NZ8_0757
+        ],
+        imagesAfter: [
+          { shape: "full", src: "assets/img/work/jang-5.jpg" },  // jang-1 (1-3칼럼) 본문 뒤
+          { shape: "full", src: "assets/img/work/jang-6.jpg" }   // jang-2 (1-3칼럼) 본문 뒤
         ],
         medium: {
           ko: "혼합재료, 가변 크기, 2026",
@@ -212,9 +222,13 @@ const SITE = {
       work: {
         title: { ko: "이끼의 연결", en: "Connected Mosses", zh: "相連的苔蘚" },
         images: [
-          { shape: "v",  src: "assets/img/work/foreseen-2.jpg" },
-          { shape: "sq", src: "assets/img/work/foreseen-1.jpg" },
-          { shape: "sq", src: "assets/img/work/foreseen-3.jpg" }
+          { shape: "sq", src: "assets/img/work/foreseen-1.jpg" },  // NZ8_0789 (1-2칼럼)
+          { shape: "sq", src: "assets/img/work/foreseen-2.jpg" },  // NZ8_0794 (1-2칼럼)
+          { shape: "sq", src: "assets/img/work/foreseen-3.jpg" },  // NZ8_0812 (1-2칼럼)
+          { shape: "sq", src: "assets/img/work/foreseen-4.jpg" }   // NZ8_1891 (1-2칼럼)
+        ],
+        imagesAfter: [
+          { shape: "full", src: "assets/img/work/foreseen-5.jpg" }   // foreseen-1 (1-3칼럼) 본문 뒤
         ],
         medium: {
           ko: "철제 계단, 내장 스크린, 커스텀 소프트웨어, 가변 크기, 2026",
