@@ -58,6 +58,23 @@
     });
   }
 
+  // 촬영 크레딧을 이미지의 '실제' 하단 바로 아래(사진 밖)에 배치.
+  // object-fit:contain + top-left 이라 렌더 이미지 높이 = min(boxW/natW, boxH/natH)*natH,
+  // 위쪽 정렬 → 이미지 하단(박스 상단 기준)=renderedH → 그 아래 6px 에 크레딧 top.
+  function placeCredit(box) {
+    const img = box.querySelector(".work__img");
+    const credit = box.querySelector(".work__credit");
+    if (!img || !credit || !img.naturalWidth) return;
+    const bw = box.clientWidth, bh = box.clientHeight;
+    if (!bw || !bh) return;
+    const scale = Math.min(bw / img.naturalWidth, bh / img.naturalHeight);
+    const renderedH = img.naturalHeight * scale;
+    credit.style.top = Math.round(renderedH + 6) + "px";
+  }
+  function placeAllCredits() {
+    document.querySelectorAll(".work__box--filled").forEach(placeCredit);
+  }
+
   // trilingual columns for one paragraph
   function buildParagraphCols(bodyByLang, index) {
     const cols = el("div", "cols");
@@ -247,6 +264,8 @@
       const img = el("img", "work__img");
       img.src = imgData.src; img.alt = opts.eyebrow || ""; img.loading = "lazy";
       box.appendChild(img);
+      box.appendChild(el("span", "work__credit", "Photographed by Felix Sze Chung Wong")); // 작업사진 좌측하단 촬영 크레딧
+      img.addEventListener("load", function () { placeCredit(box); });
       slide.appendChild(box);
       // 이미지 바로 옆 칼럼: 스튜디오명(원문) + 작업 제목 3언어(데스크톱은 전부, 모바일은 활성 언어만)
       const cap = el("div", "work__cap");
@@ -609,6 +628,7 @@
       ticking = false;
     }
     window.addEventListener("scroll", () => { if (!ticking) { window.requestAnimationFrame(update); ticking = true; } }, { passive: true });
+    window.addEventListener("resize", placeAllCredits);
     update();
   }
 
