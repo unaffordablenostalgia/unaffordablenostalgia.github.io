@@ -55,7 +55,7 @@ const SITE = {
         head: { ko: "프로그램", en: "Program", zh: "節目" },
         rows: [
           { label: { ko: "공공 프로그램", en: "Public Program", zh: "公共節目" },
-            value: "Artists Talk · 20 Aug 17:00–18:00\nCurator’s Tour · 20 Aug 18:45–19:30" }
+            value: "Artists Talk · 20 Aug 17:00–18:00\nCurator’s Tour · 20 Aug 18:45–19:30\n\nOnline Expert Talk | The Cultural Economy of Nostalgia from the Perspective of Ecologies of Artistic Practice with Prof. Ashley Lee Wong (黃詠欣)\nMonday, 26 October 2026\n5:00–6:30pm (HK) / 6:00–7:30pm (KST)\n\nOnline Artist Talk | Affordable Journey to Unaffordable Nostalgia\nThursday, 29 October 2026\n10:00–11:30am (HK) / 11:00am–12:30pm (KST)" }
         ]
       }
     ]

@@ -715,6 +715,13 @@ body[data-lang="zh"] .col[data-lang="zh"] { display: block; }
   .story--map .story__panel--map .panel__body { display: flex; align-items: flex-start; }
 }
 
+/* ---- MOBILE: 늘어난 info 내용(공공 프로그램)이 한 화면에 들어오도록 압축 ---- */
+@media (max-width: 999px) {
+  .info-grid { gap: 14px; }
+  .info-row { margin-bottom: 7px; }
+  .info-row__value { font-size: 12px; line-height: 1.4; }
+}
+
 /* =============================================================
    OPENING (KV → INFO) : 배경 고정, 텍스트 레이어만 블러 교체
    ============================================================= */
@@ -755,6 +762,11 @@ body[data-lang="zh"] .col[data-lang="zh"] { display: block; }
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px;
   padding-bottom: 12px; margin-bottom: clamp(18px, 3vh, 30px);
   border-bottom: 1px solid var(--line);
+}
+/* MOBILE: info 패널 높이 확대 + 여백 축소 (base .opening__info 뒤에 둬 소스 순서로 덮음) */
+@media (max-width: 999px) {
+  .opening__info { max-height: 94svh; padding: clamp(28px, 5vh, 56px) var(--gutter) clamp(16px, 3vh, 30px); }
+  .opening__info .panel__head { margin-bottom: 14px; }
 }
 
 /* =============================================================
